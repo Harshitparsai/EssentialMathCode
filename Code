@@ -1,0 +1,127 @@
+#include<bits/stdc++.h>
+using namespace std;
+//program to find the gcd
+int gcd(int a,int b)
+{  if(a>b)
+        swap(a,b);
+    if(a ==0 )
+    {
+        return b;
+    }
+    return gcd(b%a,a);
+    
+}
+//program to find the lcm
+int lcm(int a,int b)
+{
+    int g = gcd(a,b);
+    return a*b/g;
+}
+// program to find the trailing zeroes in  the factorial of the number
+int countTrailingZero(int n)
+{  int count= 0;
+    while(n)
+    {
+        count+=n/5;
+        n/=5;
+    }
+    return count;
+}
+void printArr(vector<int> a,int n) 
+{ 
+    for (int i=0; i<n; i++) 
+        cout << a[i] << " "; 
+    printf("\n"); 
+} 
+  
+// Generating permutation using Heap Algorithm 
+void heapPermutation(vector<int> a, int size, int n) 
+{ 
+    // if size becomes 1 then prints the obtained 
+    // permutation 
+    if (size == 1) 
+    { 
+        printArr(a, n); 
+        return; 
+    } 
+  
+    for (int i=0; i<size; i++) 
+    { 
+        heapPermutation(a,size-1,n); 
+  
+        // if size is odd, swap first and last 
+        // element 
+        if (size%2==1) 
+            swap(a[0], a[size-1]); 
+  
+        // If size is even, swap ith and last 
+        // element 
+        else
+            swap(a[i], a[size-1]); 
+    } 
+}
+// program to generate all the permutation of the string using backtracking
+void permuteS(string s,int l,int r)
+{
+    if(l == r)
+    {
+        cout<<s<<" ";
+    }
+    else{
+        for(int i = l ; i<=r;i++)
+        {
+            swap(s[l],s[i]);
+            permuteS(s,l+1,r);
+            swap(s[l],s[i]);
+        }
+    }
+}
+// program to find the modular inverse of a mod m
+int modularInverse(int a,int m)
+{
+    a = a%m;
+    for(int i=1;i<m;i++)
+    {
+        if(a*i%m == 1)
+        {
+            return i;
+        }
+    }
+    return -1;
+}
+int main()
+{
+    int n;
+    cin>>n;
+    //seive of program
+    vector<bool> v(n+1,true);
+    v[0] = false;
+    v[1] = false;
+    for(int i=2;i*i<=n;i++)
+    {
+        if(v[i])
+        {
+            for(int j=i*i;j<=n;j+=i)
+            {
+                v[j] = false;
+            }
+        }
+    }
+    int c=0;
+    for(int i=0;i<=n;i++)
+    {
+        cout<<v[i]<<" "; 
+        if(v[i])
+            c++;
+    }
+    cout<<c<<" ";
+    int a1 = gcd(4,2);
+    cout<<a1<<" ";
+    int b = lcm(4,2);
+    cout<<b<<" ";
+    cout<<countTrailingZero(100);
+    vector<int> a{1,2,3,4};
+    heapPermutation(a,a.size(),a.size());
+    permuteS("ABC",0,2);
+    cout<<modularInverse(3,10);
+}
